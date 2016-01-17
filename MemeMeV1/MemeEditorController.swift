@@ -11,11 +11,15 @@ import MobileCoreServices
 
 class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
-    @IBOutlet weak var imageView: UIImageView!
+    var barSpace: UIBarButtonItem!
+    var cameraButton: UIBarButtonItem!
+    var albumButton: UIBarButtonItem!
+    var resizeButton: UIBarButtonItem!
     
-    
-    func shareMeme() {
-        
+    @IBOutlet weak var imageView: UIImageView! {
+        didSet {
+            imageView.contentMode = .ScaleAspectFill
+        }
     }
     
     func pickImageFromAlbum() {
@@ -29,6 +33,7 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
     func getImage(sourceType: UIImagePickerControllerSourceType) {
         let picker = UIImagePickerController()
         picker.sourceType = sourceType
+        picker.mediaTypes = [kUTTypeImage as String]
         picker.delegate = self
         picker.allowsEditing = true
         presentViewController(picker, animated: true, completion: nil)
@@ -37,7 +42,7 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         var image = info[UIImagePickerControllerEditedImage] as? UIImage
         if image == nil {
-            image = info[UIImagePickerControllerOriginalImage] as? UIImage
+           image = info[UIImagePickerControllerOriginalImage] as? UIImage
         }
         imageView.image = image
         dismissViewControllerAnimated(true, completion: nil)
@@ -47,37 +52,54 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
         dismissViewControllerAnimated(true, completion: nil)
     }
     
+    func shareMeme() {
+        
+    }
+    
+    func resizeImage() {
+        switch imageView.contentMode {
+        case .ScaleAspectFill:
+            imageView.contentMode = .ScaleAspectFit
+        case .ScaleAspectFit:
+            imageView.contentMode = .Center
+        case .Center:
+            imageView.contentMode = .ScaleToFill
+        case .ScaleToFill:
+            imageView.contentMode = .ScaleAspectFill
+        default:
+            break
+        }
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         title = "Meme Editor"
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cancel", style: .Plain, target: nil, action: nil)
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Action, target: nil, action: nil)
     
-        let barSpace = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
-        let cameraButton = UIBarButtonItem(barButtonSystemItem: .Camera, target: self, action: "takeImageWithCamera")
-        let albumButton = UIBarButtonItem(title: "Album", style: .Plain, target: self, action: "pickImageFromAlbum")
-        toolbarItems = [barSpace, cameraButton, barSpace, albumButton, barSpace]
+        barSpace = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
+        cameraButton = UIBarButtonItem(barButtonSystemItem: .Camera, target: self, action: "takeImageWithCamera")
+        albumButton = UIBarButtonItem(title: "Album", style: .Plain, target: self, action: "pickImageFromAlbum")
+        resizeButton = UIBarButtonItem(title: "Resize", style: .Plain, target: self, action: "resizeImage")
+
+        toolbarItems = [barSpace, albumButton, barSpace, cameraButton, barSpace, resizeButton, barSpace]
         
-        if !UIImagePickerController.isSourceTypeAvailable(.Camera) {
-            cameraButton.enabled = false
-        }
-        if !UIImagePickerController.isSourceTypeAvailable(.PhotoLibrary) {
-            albumButton.enabled = false
-        }
+        cameraButton.enabled = UIImagePickerController.isSourceTypeAvailable(.Camera)
+        albumButton.enabled = UIImagePickerController.isSourceTypeAvailable(.PhotoLibrary)
     }
 
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        //resizeButton.enabled = false
+    }
+    
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
 
         navigationController?.setToolbarHidden(false, animated: true)
-
     }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-
 }
 
