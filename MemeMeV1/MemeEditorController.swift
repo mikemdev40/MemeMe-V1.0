@@ -50,6 +50,7 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
     
     func shareMeme() {
         //TODO: share method
+        print("share meme")
    
     }
     
@@ -70,7 +71,10 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
     
     func cancel() {
         //TODO: cancel method
-        
+        imageView.image = nil
+        topTextField.text = placeholderText
+        bottomTextField.text = placeholderText
+        resizeButton.enabled = false
     }
     
     func setText() {
@@ -136,8 +140,8 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
         super.viewDidLoad()
         
         title = "Meme Editor"
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cancel", style: .Plain, target: nil, action: nil)
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Action, target: nil, action: nil)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: "cancel")
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Action, target: self, action: "shareMeme")
     
         barSpace = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
         cameraButton = UIBarButtonItem(barButtonSystemItem: .Camera, target: self, action: "takeImageWithCamera")
