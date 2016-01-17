@@ -76,11 +76,13 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
         topTextField.defaultTextAttributes = memeTextAttributes
         topTextField.textAlignment = .Center
         topTextField.adjustsFontSizeToFitWidth = true
+        topTextField.minimumFontSize = 20
         
         bottomTextField.borderStyle = .None
         bottomTextField.defaultTextAttributes = memeTextAttributes
         bottomTextField.textAlignment = .Center
         bottomTextField.adjustsFontSizeToFitWidth = true
+        bottomTextField.minimumFontSize = 20
         
         if topTextField.text == "" {
             topTextField.text = "Tap to edit"
