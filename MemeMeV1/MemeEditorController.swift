@@ -49,6 +49,7 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
     }
     
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+
         dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -93,7 +94,11 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        //resizeButton.enabled = false
+        if imageView.image == nil {
+            resizeButton.enabled = false
+        } else {
+            resizeButton.enabled = true
+        }
     }
     
     override func viewDidAppear(animated: Bool) {
