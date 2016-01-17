@@ -22,6 +22,11 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
     var albumButton: UIBarButtonItem!
     var resizeButton: UIBarButtonItem!
     
+    //MARK: CONSTANTS
+    let memeTextAttributes = [NSStrokeColorAttributeName: UIColor.blackColor(),
+        NSStrokeWidthAttributeName: -2.5,
+        NSForegroundColorAttributeName: UIColor.whiteColor(),
+        NSFontAttributeName: UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!]
     
     //MARK: METHODS
     func pickImageFromAlbum() {
@@ -59,11 +64,30 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
         default:
             break
         }
-        
     }
     
     func cancel() {
         //TODO: cancel method
+        
+    }
+    
+    func setText() {
+        topTextField.borderStyle = .None
+        topTextField.defaultTextAttributes = memeTextAttributes
+        topTextField.textAlignment = .Center
+        topTextField.adjustsFontSizeToFitWidth = true
+        
+        bottomTextField.borderStyle = .None
+        bottomTextField.defaultTextAttributes = memeTextAttributes
+        bottomTextField.textAlignment = .Center
+        bottomTextField.adjustsFontSizeToFitWidth = true
+        
+        if topTextField.text == "" {
+            topTextField.text = "Tap to edit"
+        }
+        if bottomTextField.text == "" {
+            bottomTextField.text = "Tap to edit"
+        }
     }
     
     //MARK: DELEGATE METHODS
@@ -79,6 +103,18 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
     
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
         dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func textFieldDidBeginEditing(textField: UITextField) {
+        if textField.text == "Tap to edit" {
+            textField.text = ""
+        }
+    }
+    
+    func textFieldDidEndEditing(textField: UITextField) {
+        if textField.text == "" {
+            textField.text = "Tap to edit"
+        }
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
@@ -111,6 +147,8 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
         
         topTextField.delegate = self
         bottomTextField.delegate = self
+        
+        setText()
     }
 
     override func viewWillAppear(animated: Bool) {
