@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Meme Editor Controller-->
@@ -17,22 +18,40 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ko6-aX-iHG">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ko6-aX-iHG">
                                 <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             </imageView>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Top Text" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Qex-hf-2M4">
+                                <rect key="frame" x="20" y="122" width="560" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Bottom Text" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="DJf-sp-dKE">
+                                <rect key="frame" x="20" y="503" width="560" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="ko6-aX-iHG" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="2qf-eu-RLe"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Qex-hf-2M4" secondAttribute="trailing" id="34a-z0-h8n"/>
                             <constraint firstItem="ko6-aX-iHG" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="9RF-1u-GAa"/>
                             <constraint firstAttribute="trailing" secondItem="ko6-aX-iHG" secondAttribute="trailing" id="Efa-dj-N1c"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="DJf-sp-dKE" secondAttribute="leading" id="HZc-FU-j4D"/>
+                            <constraint firstItem="Qex-hf-2M4" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="J4V-Bb-JZr"/>
+                            <constraint firstItem="Qex-hf-2M4" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="58" id="JP8-cc-7Cx"/>
                             <constraint firstItem="ko6-aX-iHG" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="SgS-b3-cN8"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="DJf-sp-dKE" secondAttribute="trailing" id="h0w-0R-xUl"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="DJf-sp-dKE" secondAttribute="bottom" constant="67" id="oBb-pc-OD6"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="LyO-dQ-buV"/>
                     <connections>
+                        <outlet property="bottomTextField" destination="DJf-sp-dKE" id="edC-OC-4QQ"/>
                         <outlet property="imageView" destination="ko6-aX-iHG" id="F2A-Vw-XNq"/>
+                        <outlet property="topTextField" destination="Qex-hf-2M4" id="XdM-ek-i5V"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

@@ -9,19 +9,21 @@
 import UIKit
 import MobileCoreServices
 
-class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
 
+    //MARK: OUTLETS
+    @IBOutlet weak var topTextField: UITextField!
+    @IBOutlet weak var bottomTextField: UITextField!
+    @IBOutlet weak var imageView: UIImageView!
+    
+    //MARK: PROPERTIES
     var barSpace: UIBarButtonItem!
     var cameraButton: UIBarButtonItem!
     var albumButton: UIBarButtonItem!
     var resizeButton: UIBarButtonItem!
     
-    @IBOutlet weak var imageView: UIImageView! {
-        didSet {
-            imageView.contentMode = .ScaleAspectFill
-        }
-    }
     
+    //MARK: METHODS
     func pickImageFromAlbum() {
         getImage(.PhotoLibrary)
     }
@@ -39,22 +41,9 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
         presentViewController(picker, animated: true, completion: nil)
     }
     
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
-        var image = info[UIImagePickerControllerEditedImage] as? UIImage
-        if image == nil {
-           image = info[UIImagePickerControllerOriginalImage] as? UIImage
-        }
-        imageView.image = image
-        dismissViewControllerAnimated(true, completion: nil)
-    }
-    
-    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
-
-        dismissViewControllerAnimated(true, completion: nil)
-    }
-    
     func shareMeme() {
-        
+        //TODO: share method
+   
     }
     
     func resizeImage() {
@@ -73,6 +62,36 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
         
     }
     
+    func cancel() {
+        //TODO: cancel method
+    }
+    
+    //MARK: DELEGATE METHODS
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        var image = info[UIImagePickerControllerEditedImage] as? UIImage
+        if image == nil {
+           image = info[UIImagePickerControllerOriginalImage] as? UIImage
+        }
+        imageView.image = image
+        
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    //MARK: VIEW CONTROLLER METHODS
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        view.endEditing(true)
+    }
+    
+    //MARK: VIEW CONTROLLER LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -89,6 +108,9 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
         
         cameraButton.enabled = UIImagePickerController.isSourceTypeAvailable(.Camera)
         albumButton.enabled = UIImagePickerController.isSourceTypeAvailable(.PhotoLibrary)
+        
+        topTextField.delegate = self
+        bottomTextField.delegate = self
     }
 
     override func viewWillAppear(animated: Bool) {
