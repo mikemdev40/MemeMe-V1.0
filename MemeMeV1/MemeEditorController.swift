@@ -28,6 +28,8 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
         NSForegroundColorAttributeName: UIColor.whiteColor(),
         NSFontAttributeName: UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!]
     
+    let placeholderText = "Tap to edit"
+    
     //MARK: METHODS
     func pickImageFromAlbum() {
         getImage(.PhotoLibrary)
@@ -85,10 +87,10 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
         bottomTextField.minimumFontSize = 20
         
         if topTextField.text == "" {
-            topTextField.text = "Tap to edit"
+            topTextField.text = placeholderText
         }
         if bottomTextField.text == "" {
-            bottomTextField.text = "Tap to edit"
+            bottomTextField.text = placeholderText
         }
     }
     
@@ -108,14 +110,14 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
     }
     
     func textFieldDidBeginEditing(textField: UITextField) {
-        if textField.text == "Tap to edit" {
+        if textField.text == placeholderText {
             textField.text = ""
         }
     }
     
     func textFieldDidEndEditing(textField: UITextField) {
         if textField.text == "" {
-            textField.text = "Tap to edit"
+            textField.text = placeholderText
         }
     }
     
