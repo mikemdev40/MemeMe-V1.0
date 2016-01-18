@@ -105,7 +105,9 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
     func keyboardWillShow(notification: NSNotification) {
         if let tag = activeTextField?.tag {
             if tag == 2 {
-                view.frame.origin.y -= getKeyboardHeight(notification)
+                if let toolbarHeight = navigationController?.toolbar.frame.size.height {
+                    view.frame.origin.y -= (getKeyboardHeight(notification) - toolbarHeight)
+                }
             }
         }
     }
@@ -113,7 +115,9 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
     func keyboardWillHide(notification: NSNotification) {
         if let tag = activeTextField?.tag {
             if tag == 2 {
-                view.frame.origin.y += getKeyboardHeight(notification)
+                if let toolbarHeight = navigationController?.toolbar.frame.size.height {
+                    view.frame.origin.y += (getKeyboardHeight(notification) - toolbarHeight)
+                }
             }
         }
     }
