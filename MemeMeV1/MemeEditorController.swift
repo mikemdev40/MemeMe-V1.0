@@ -21,6 +21,7 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
     var cameraButton: UIBarButtonItem!
     var albumButton: UIBarButtonItem!
     var resizeButton: UIBarButtonItem!
+    let notificationCenter = NSNotificationCenter.defaultCenter()
     
     //MARK: CONSTANTS
     let memeTextAttributes = [NSStrokeColorAttributeName: UIColor.blackColor(),
@@ -49,8 +50,8 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
     }
     
     func shareMeme() {
-        //TODO: share method
-        print("share meme")
+      //  let share = UIActivityViewController(activityItems: [nil], applicationActivities: nil)
+      //  presentViewController(share, animated: true, completion: nil)
    
     }
     
@@ -96,6 +97,30 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
         if bottomTextField.text == "" {
             bottomTextField.text = placeholderText
         }
+    }
+    
+    func keyboardWillShow(notification: NSNotification) {
+        view.frame.origin.y -= getKeyboardHeight(notification)
+    }
+    
+    func keyboardWillHide(notification: NSNotification) {
+        view.frame.origin.y += getKeyboardHeight(notification)
+    }
+    
+    func getKeyboardHeight(notification: NSNotification) -> CGFloat {
+        let userInfo = notification.userInfo
+        let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
+        return keyboardSize.CGRectValue().height
+    }
+    
+    func subscribeToKeyboardNotifications() {
+        notificationCenter.addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
+        notificationCenter.addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
+    }
+    
+    func unsubscribeFromKeyboardNotifications() {
+        notificationCenter.removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
+        notificationCenter.removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
     }
     
     //MARK: DELEGATE METHODS
@@ -167,12 +192,20 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
         } else {
             resizeButton.enabled = true
         }
+        
+        subscribeToKeyboardNotifications()
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
 
         navigationController?.setToolbarHidden(false, animated: true)
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        unsubscribeFromKeyboardNotifications()
     }
 }
 
