@@ -20,7 +20,6 @@ class EditOptionsViewController: UIViewController {
     @IBOutlet weak var fontStyleForward: UIButton!
 
     var imageView: UIImageView?
-//    var memeFont: UIFont?
     var delegate: UpdateFontDelegate?
     
     @IBAction func changeImageScale(sender: UIButton) {
@@ -66,17 +65,40 @@ class EditOptionsViewController: UIViewController {
             if let font = delegate?.newFontStyle {
                 switch font.fontName {
                 case "HelveticaNeue-CondensedBlack":
-                    delegate?.newFontStyle = UIFont(name: "Chalkduster", size: 40)!
-                    print("helvetica")
-                case "Chalkduster":
+                    delegate?.newFontStyle = UIFont(name: "ChalkboardSE-Bold", size: 40)!
+                case "ChalkboardSE-Bold":
+                    delegate?.newFontStyle = UIFont(name: "Copperplate-Bold", size: 40)!
+                case "Copperplate-Bold":
+                    delegate?.newFontStyle = UIFont(name: "Courier-Bold", size: 40)!
+                case "Courier-Bold":
+                    delegate?.newFontStyle = UIFont(name: "Futura-CondensedExtraBold", size: 40)!
+                case "Futura-CondensedExtraBold":
                     delegate?.newFontStyle = UIFont(name: "Verdana-Bold", size: 40)!
-                    print("chalk")
+                case "Verdana-Bold":
+                    delegate?.newFontStyle = UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!
                 default:
                     break
                 }
             }
         case 2:
-            print("case2")
+            if let font = delegate?.newFontStyle {
+                switch font.fontName {
+                case "HelveticaNeue-CondensedBlack":
+                    delegate?.newFontStyle = UIFont(name: "Verdana-Bold", size: 40)!
+                case "Verdana-Bold":
+                    delegate?.newFontStyle = UIFont(name: "Futura-CondensedExtraBold", size: 40)!
+                case "Futura-CondensedExtraBold":
+                    delegate?.newFontStyle = UIFont(name: "Courier-Bold", size: 40)!
+                case "Courier-Bold":
+                    delegate?.newFontStyle = UIFont(name: "Copperplate-Bold", size: 40)!
+                case "Copperplate-Bold":
+                    delegate?.newFontStyle = UIFont(name: "ChalkboardSE-Bold", size: 40)!
+                case "ChalkboardSE-Bold":
+                    delegate?.newFontStyle = UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!
+                default:
+                    break
+                }
+            }
         default:
             break
         }

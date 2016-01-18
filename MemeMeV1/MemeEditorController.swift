@@ -20,6 +20,7 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
     struct Constants {
         static let placeholderText = "Tap to edit"
         static let defaultFont = UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!
+        static let defaultScale = UIViewContentMode.ScaleAspectFit
     }
     
     //MARK: PROPERTIES
@@ -79,6 +80,8 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
         topTextField.text = Constants.placeholderText
         bottomTextField.text = Constants.placeholderText
         editButton.enabled = false
+        memeFont = Constants.defaultFont
+        imageView.contentMode = Constants.defaultScale
     }
     
     func setText() {
@@ -87,14 +90,12 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
         topTextField.textAlignment = .Center
         topTextField.adjustsFontSizeToFitWidth = true
         topTextField.minimumFontSize = 20
-        topTextField.tag = 1
         
         bottomTextField.borderStyle = .None
         bottomTextField.defaultTextAttributes = memeTextAttributes
         bottomTextField.textAlignment = .Center
         bottomTextField.adjustsFontSizeToFitWidth = true
         bottomTextField.minimumFontSize = 20
-        bottomTextField.tag = 2
         
         if topTextField.text == "" {
             topTextField.text = Constants.placeholderText
@@ -188,7 +189,6 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
                     popover.barButtonItem = sender as? UIBarButtonItem
                     eovc.preferredContentSize = CGSize(width: 220, height: 90)
                     eovc.imageView = imageView
-                   // eovc.memeFont = memeFont
                     eovc.delegate = self
                 }
             }
@@ -216,6 +216,8 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
         
         topTextField.delegate = self
         bottomTextField.delegate = self
+        topTextField.tag = 1
+        bottomTextField.tag = 2
         
         setText()
     }
@@ -230,7 +232,7 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
         }
         
         subscribeToKeyboardNotifications()
-        print("view will appear")
+
     }
     
     override func viewWillDisappear(animated: Bool) {
