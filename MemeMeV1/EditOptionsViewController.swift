@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol UpdateFontDelegate {
+    var newFontStyle: UIFont { get set}
+}
+
 class EditOptionsViewController: UIViewController {
 
     @IBOutlet weak var imageScaleBack: UIButton!
@@ -16,7 +20,8 @@ class EditOptionsViewController: UIViewController {
     @IBOutlet weak var fontStyleForward: UIButton!
 
     var imageView: UIImageView?
-    var fontStyle: UIFont?
+//    var memeFont: UIFont?
+    var delegate: UpdateFontDelegate?
     
     @IBAction func changeImageScale(sender: UIButton) {
         switch sender.tag {
@@ -56,7 +61,25 @@ class EditOptionsViewController: UIViewController {
     }
     
     @IBAction func changeFontStyle(sender: UIButton) {
-        
+        switch sender.tag {
+        case 1:
+            if let font = delegate?.newFontStyle {
+                switch font.fontName {
+                case "HelveticaNeue-CondensedBlack":
+                    delegate?.newFontStyle = UIFont(name: "Chalkduster", size: 40)!
+                    print("helvetica")
+                case "Chalkduster":
+                    delegate?.newFontStyle = UIFont(name: "Verdana-Bold", size: 40)!
+                    print("chalk")
+                default:
+                    break
+                }
+            }
+        case 2:
+            print("case2")
+        default:
+            break
+        }
     }
     
     override func viewDidLoad() {

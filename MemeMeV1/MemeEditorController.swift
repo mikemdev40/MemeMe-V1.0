@@ -9,12 +9,18 @@
 import UIKit
 import MobileCoreServices
 
-class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UIPopoverPresentationControllerDelegate {
-
+class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UIPopoverPresentationControllerDelegate, UpdateFontDelegate {
+    
     //MARK: OUTLETS
     @IBOutlet weak var topTextField: UITextField!
     @IBOutlet weak var bottomTextField: UITextField!
     @IBOutlet weak var imageView: UIImageView!
+    
+    //MARK: CONSTANTS
+    struct Constants {
+        static let placeholderText = "Tap to edit"
+        static let defaultFont = UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!
+    }
     
     //MARK: PROPERTIES
     var barSpace: UIBarButtonItem!
@@ -23,14 +29,22 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
     var editButton: UIBarButtonItem!
     var activeTextField: UITextField?
     let notificationCenter = NSNotificationCenter.defaultCenter()
+
+    var memeFont = Constants.defaultFont {
+        didSet { setText() }
+    }
+
+    var newFontStyle = Constants.defaultFont {
+        didSet { memeFont = newFontStyle }
+    }
     
-    //MARK: CONSTANTS
-    let memeTextAttributes = [NSStrokeColorAttributeName: UIColor.blackColor(),
-        NSStrokeWidthAttributeName: -2.5,
-        NSForegroundColorAttributeName: UIColor.whiteColor(),
-        NSFontAttributeName: UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!]
-    
-    let placeholderText = "Tap to edit"
+    //MARK: COMPUTED PROPERTITES
+    var memeTextAttributes: [String: AnyObject] {
+        return [NSStrokeColorAttributeName: UIColor.blackColor(),
+            NSStrokeWidthAttributeName: -2,
+            NSForegroundColorAttributeName: UIColor.whiteColor(),
+            NSFontAttributeName: memeFont]
+    }
     
     //MARK: METHODS
     func pickImageFromAlbum() {
@@ -62,8 +76,8 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
     
     func cancel() {
         imageView.image = nil
-        topTextField.text = placeholderText
-        bottomTextField.text = placeholderText
+        topTextField.text = Constants.placeholderText
+        bottomTextField.text = Constants.placeholderText
         editButton.enabled = false
     }
     
@@ -83,10 +97,10 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
         bottomTextField.tag = 2
         
         if topTextField.text == "" {
-            topTextField.text = placeholderText
+            topTextField.text = Constants.placeholderText
         }
         if bottomTextField.text == "" {
-            bottomTextField.text = placeholderText
+            bottomTextField.text = Constants.placeholderText
         }
     }
     
@@ -141,14 +155,14 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
     
     func textFieldDidBeginEditing(textField: UITextField) {
         activeTextField = textField
-        if textField.text == placeholderText {
+        if textField.text == Constants.placeholderText {
             textField.text = ""
         }
     }
     
     func textFieldDidEndEditing(textField: UITextField) {
         if textField.text == "" {
-            textField.text = placeholderText
+            textField.text = Constants.placeholderText
         }
     }
     
@@ -174,7 +188,8 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
                     popover.barButtonItem = sender as? UIBarButtonItem
                     eovc.preferredContentSize = CGSize(width: 220, height: 90)
                     eovc.imageView = imageView
-                    //eovc.fontStyle =
+                   // eovc.memeFont = memeFont
+                    eovc.delegate = self
                 }
             }
         }
@@ -215,6 +230,7 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
         }
         
         subscribeToKeyboardNotifications()
+        print("view will appear")
     }
     
     override func viewWillDisappear(animated: Bool) {
