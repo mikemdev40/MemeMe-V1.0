@@ -110,7 +110,7 @@ class EditOptionsViewController: UIViewController {
     //MARK: VIEW CONTROLLER LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+            
         imageScaleBack.tag = 1
         imageScaleForward.tag = 2
         fontStyleBack.tag = 1

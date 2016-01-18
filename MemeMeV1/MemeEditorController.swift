@@ -21,8 +21,6 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
         static let placeholderText = "Tap to edit"
         static let defaultFont = UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!
         static let defaultScale = UIViewContentMode.ScaleAspectFit
-        static let disabledGray = UIColor(red: 127/255, green: 127/255, blue: 127/255, alpha: 1.0)
-        static let enabledBlue = UIColor(red: 14/255, green: 122/255, blue: 254/255, alpha: 1.0)
     }
     
     //MARK: PROPERTIES
@@ -79,7 +77,7 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
             if let popover = eovc.popoverPresentationController {
                 popover.delegate = self
                 popover.barButtonItem = optionsButton
-                eovc.preferredContentSize = CGSize(width: 220, height: 90)
+                eovc.preferredContentSize = CGSize(width: 210, height: 90)
                 eovc.imageView = imageView
                 eovc.delegate = self
                 
