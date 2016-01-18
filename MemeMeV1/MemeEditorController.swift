@@ -188,8 +188,9 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
                 if let popover = eovc.popoverPresentationController {
                     popover.delegate = self
                     popover.barButtonItem = sender as? UIBarButtonItem
-               //     let minimumSize = eovc.view.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
                     eovc.preferredContentSize = CGSize(width: 220, height: 90)
+                    eovc.imageView = imageView
+                    //eovc.fontStyle =
                 }
             }
         }

@@ -73,41 +73,83 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="5Xx-rX-3GT">
-                                <rect key="frame" x="201" y="266" width="198" height="68"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="5Xx-rX-3GT">
+                                <rect key="frame" x="208.5" y="257.5" width="183.5" height="85"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="dIU-Aw-kaJ">
-                                        <rect key="frame" x="0.0" y="0.0" width="198" height="29"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="dIU-Aw-kaJ">
+                                        <rect key="frame" x="0.0" y="0.0" width="183.5" height="40"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Image Scale" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sVz-0e-Ucf">
-                                                <rect key="frame" x="0.0" y="0.0" width="94" height="29"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Image Scale" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sVz-0e-Ucf">
+                                                <rect key="frame" x="0.0" y="0.0" width="93.5" height="40"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="ePn-ic-9cH">
-                                                <rect key="frame" x="104" y="0.0" width="94" height="29"/>
-                                            </stepper>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oS1-et-P1c">
+                                                <rect key="frame" x="98" y="0.0" width="40" height="40"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="40" id="Zry-J4-GOJ"/>
+                                                    <constraint firstAttribute="width" constant="40" id="aKK-R1-3lY"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                                <state key="normal" title="&lt;"/>
+                                                <connections>
+                                                    <action selector="changeImageScale:" destination="ARW-dl-qVX" eventType="touchUpInside" id="ya3-Vr-kcb"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EYt-Ii-b4G">
+                                                <rect key="frame" x="143" y="0.0" width="40" height="40"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="40" id="Dz5-ew-ejh"/>
+                                                    <constraint firstAttribute="width" constant="40" id="ffW-LE-eKM"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                                <state key="normal" title="&gt;"/>
+                                                <connections>
+                                                    <action selector="changeImageScale:" destination="ARW-dl-qVX" eventType="touchUpInside" id="GfA-xg-L5Q"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="HgP-M0-rGH">
-                                        <rect key="frame" x="0.0" y="39" width="198" height="29"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="HgP-M0-rGH">
+                                        <rect key="frame" x="0.0" y="45" width="183.5" height="40"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Font Style" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1aQ-77-8eg">
-                                                <rect key="frame" x="0.0" y="0.0" width="94" height="29"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Font Style" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1aQ-77-8eg">
+                                                <rect key="frame" x="0.0" y="0.0" width="93.5" height="40"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="ggA-Dl-fe2">
-                                                <rect key="frame" x="104" y="0.0" width="94" height="29"/>
-                                            </stepper>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6iF-8T-WzR">
+                                                <rect key="frame" x="98" y="0.0" width="40" height="40"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="40" id="UaB-50-5mD"/>
+                                                    <constraint firstAttribute="height" constant="40" id="mRS-ed-Ide"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                                <state key="normal" title="&lt;"/>
+                                                <connections>
+                                                    <action selector="changeFontStyle:" destination="ARW-dl-qVX" eventType="touchUpInside" id="mj6-sr-pDb"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JHG-bL-jbY">
+                                                <rect key="frame" x="143" y="0.0" width="40" height="40"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="40" id="ffC-6R-XMb"/>
+                                                    <constraint firstAttribute="height" constant="40" id="msW-Sw-Cd5"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                                <state key="normal" title="&gt;"/>
+                                                <connections>
+                                                    <action selector="changeFontStyle:" destination="ARW-dl-qVX" eventType="touchUpInside" id="5vp-UF-Ula"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                     </stackView>
                                 </subviews>
                             </stackView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="5Xx-rX-3GT" firstAttribute="centerX" secondItem="9BR-qc-csD" secondAttribute="centerX" id="Auy-q7-fuH"/>
                             <constraint firstItem="5Xx-rX-3GT" firstAttribute="centerY" secondItem="9BR-qc-csD" secondAttribute="centerY" id="qGH-La-4Mg"/>
@@ -119,6 +161,12 @@
                             </mask>
                         </variation>
                     </view>
+                    <connections>
+                        <outlet property="fontStyleBack" destination="6iF-8T-WzR" id="en0-3m-QI8"/>
+                        <outlet property="fontStyleForward" destination="JHG-bL-jbY" id="gfP-iS-1px"/>
+                        <outlet property="imageScaleBack" destination="oS1-et-P1c" id="Y8E-0r-bSa"/>
+                        <outlet property="imageScaleForward" destination="EYt-Ii-b4G" id="07B-mC-YcP"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yXY-dk-JKk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

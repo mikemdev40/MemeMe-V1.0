@@ -10,26 +10,62 @@ import UIKit
 
 class EditOptionsViewController: UIViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    @IBOutlet weak var imageScaleBack: UIButton!
+    @IBOutlet weak var imageScaleForward: UIButton!
+    @IBOutlet weak var fontStyleBack: UIButton!
+    @IBOutlet weak var fontStyleForward: UIButton!
 
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    var imageView: UIImageView?
+    var fontStyle: UIFont?
+    
+    @IBAction func changeImageScale(sender: UIButton) {
+        switch sender.tag {
+        case 1:
+            if let imageView = imageView {
+                switch imageView.contentMode {
+                case .ScaleAspectFill:
+                    imageView.contentMode = .ScaleToFill
+                case .ScaleToFill:
+                    imageView.contentMode = .Center
+                case .Center:
+                    imageView.contentMode = .ScaleAspectFit
+                case .ScaleAspectFit:
+                    imageView.contentMode = .ScaleAspectFill
+                default:
+                    break
+                }
+            }
+        case 2:
+            if let imageView = imageView {
+                switch imageView.contentMode {
+                case .ScaleAspectFill:
+                    imageView.contentMode = .ScaleAspectFit
+                case .ScaleAspectFit:
+                    imageView.contentMode = .Center
+                case .Center:
+                    imageView.contentMode = .ScaleToFill
+                case .ScaleToFill:
+                    imageView.contentMode = .ScaleAspectFill
+                default:
+                    break
+                }
+            }
+        default:
+            break
+        }
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    @IBAction func changeFontStyle(sender: UIButton) {
+        
     }
-    */
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        imageScaleBack.tag = 1
+        imageScaleForward.tag = 2
+        fontStyleBack.tag = 1
+        fontStyleForward.tag = 2
+    }
 
 }
