@@ -79,7 +79,7 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
         imageView.image = nil
         topTextField.text = Constants.placeholderText
         bottomTextField.text = Constants.placeholderText
-        editButton.enabled = false
+    //    editButton.enabled = false
         memeFont = Constants.defaultFont
         imageView.contentMode = Constants.defaultScale
     }
@@ -206,7 +206,7 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
         barSpace = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
         cameraButton = UIBarButtonItem(barButtonSystemItem: .Camera, target: self, action: "takeImageWithCamera")
         albumButton = UIBarButtonItem(title: "Album", style: .Plain, target: self, action: "pickImageFromAlbum")
-        editButton = UIBarButtonItem(title: "EDIT", style: .Plain, target: self, action: "edit")
+        editButton = UIBarButtonItem(title: "Options", style: .Plain, target: self, action: "edit")
 
         toolbarItems = [barSpace, albumButton, barSpace, cameraButton, barSpace, editButton, barSpace]
         navigationController?.toolbarHidden = false
@@ -225,11 +225,11 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        if imageView.image == nil {
-            editButton.enabled = false
-        } else {
-            editButton.enabled = true
-        }
+//        if imageView.image == nil {
+//            editButton.enabled = false
+//        } else {
+//            editButton.enabled = true
+//        }
         
         subscribeToKeyboardNotifications()
 

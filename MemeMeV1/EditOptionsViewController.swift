@@ -113,4 +113,15 @@ class EditOptionsViewController: UIViewController {
         fontStyleForward.tag = 2
     }
 
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if imageView?.image == nil {
+            imageScaleBack.enabled = false
+            imageScaleForward.enabled = false
+        } else {
+            imageScaleBack.enabled = true
+            imageScaleForward.enabled = true
+        }
+    }
 }
