@@ -174,6 +174,7 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
         resizeButton = UIBarButtonItem(title: "Resize", style: .Plain, target: self, action: "resizeImage")
 
         toolbarItems = [barSpace, albumButton, barSpace, cameraButton, barSpace, resizeButton, barSpace]
+        navigationController?.toolbarHidden = false
         
         cameraButton.enabled = UIImagePickerController.isSourceTypeAvailable(.Camera)
         albumButton.enabled = UIImagePickerController.isSourceTypeAvailable(.PhotoLibrary)
@@ -194,12 +195,6 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
         }
         
         subscribeToKeyboardNotifications()
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-
-        navigationController?.setToolbarHidden(false, animated: true)
     }
     
     override func viewWillDisappear(animated: Bool) {
