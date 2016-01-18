@@ -21,13 +21,15 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
         static let placeholderText = "Tap to edit"
         static let defaultFont = UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!
         static let defaultScale = UIViewContentMode.ScaleAspectFit
+        static let disabledGray = UIColor(red: 127/255, green: 127/255, blue: 127/255, alpha: 1.0)
+        static let enabledBlue = UIColor(red: 14/255, green: 122/255, blue: 254/255, alpha: 1.0)
     }
     
     //MARK: PROPERTIES
     var barSpace: UIBarButtonItem!
     var cameraButton: UIBarButtonItem!
     var albumButton: UIBarButtonItem!
-    var editButton: UIBarButtonItem!
+    var optionsButton: UIBarButtonItem!
     var activeTextField: UITextField?
     let notificationCenter = NSNotificationCenter.defaultCenter()
 
@@ -72,14 +74,26 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
     }
     
     func edit() {
-        performSegueWithIdentifier("showEditOptions", sender: editButton)
+        if let eovc = storyboard?.instantiateViewControllerWithIdentifier("optionsViewController") as? EditOptionsViewController {
+            eovc.modalPresentationStyle = .Popover
+            if let popover = eovc.popoverPresentationController {
+                popover.delegate = self
+                popover.barButtonItem = optionsButton
+                eovc.preferredContentSize = CGSize(width: 220, height: 90)
+                eovc.imageView = imageView
+                eovc.delegate = self
+                
+                presentViewController(eovc, animated: true, completion: { [unowned popover] () -> Void in
+                    popover.passthroughViews = nil
+                })
+            }
+        }
     }
     
     func cancel() {
         imageView.image = nil
         topTextField.text = Constants.placeholderText
         bottomTextField.text = Constants.placeholderText
-    //    editButton.enabled = false
         memeFont = Constants.defaultFont
         imageView.contentMode = Constants.defaultScale
     }
@@ -181,20 +195,6 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
         view.endEditing(true)
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "showEditOptions" {
-            if let eovc = segue.destinationViewController as? EditOptionsViewController {
-                if let popover = eovc.popoverPresentationController {
-                    popover.delegate = self
-                    popover.barButtonItem = sender as? UIBarButtonItem
-                    eovc.preferredContentSize = CGSize(width: 220, height: 90)
-                    eovc.imageView = imageView
-                    eovc.delegate = self
-                }
-            }
-        }
-    }
-    
     //MARK: VIEW CONTROLLER LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -206,9 +206,9 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
         barSpace = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
         cameraButton = UIBarButtonItem(barButtonSystemItem: .Camera, target: self, action: "takeImageWithCamera")
         albumButton = UIBarButtonItem(title: "Album", style: .Plain, target: self, action: "pickImageFromAlbum")
-        editButton = UIBarButtonItem(title: "Options", style: .Plain, target: self, action: "edit")
+        optionsButton = UIBarButtonItem(title: "Options", style: .Plain, target: self, action: "edit")
 
-        toolbarItems = [barSpace, albumButton, barSpace, cameraButton, barSpace, editButton, barSpace]
+        toolbarItems = [barSpace, albumButton, barSpace, cameraButton, barSpace, optionsButton, barSpace]
         navigationController?.toolbarHidden = false
         
         cameraButton.enabled = UIImagePickerController.isSourceTypeAvailable(.Camera)
@@ -225,14 +225,7 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-//        if imageView.image == nil {
-//            editButton.enabled = false
-//        } else {
-//            editButton.enabled = true
-//        }
-        
         subscribeToKeyboardNotifications()
-
     }
     
     override func viewWillDisappear(animated: Bool) {

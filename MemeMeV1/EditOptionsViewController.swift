@@ -14,14 +14,17 @@ protocol UpdateFontDelegate {
 
 class EditOptionsViewController: UIViewController {
 
+    //MARK: OUTLETS
     @IBOutlet weak var imageScaleBack: UIButton!
     @IBOutlet weak var imageScaleForward: UIButton!
     @IBOutlet weak var fontStyleBack: UIButton!
     @IBOutlet weak var fontStyleForward: UIButton!
 
+    //MARK: PROPERTIES
     var imageView: UIImageView?
     var delegate: UpdateFontDelegate?
     
+    //MARK: METHODS
     @IBAction func changeImageScale(sender: UIButton) {
         switch sender.tag {
         case 1:
@@ -104,6 +107,7 @@ class EditOptionsViewController: UIViewController {
         }
     }
     
+    //MARK: VIEW CONTROLLER LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
         

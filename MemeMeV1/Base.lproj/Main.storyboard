@@ -52,9 +52,6 @@
                         <outlet property="bottomTextField" destination="DJf-sp-dKE" id="edC-OC-4QQ"/>
                         <outlet property="imageView" destination="ko6-aX-iHG" id="F2A-Vw-XNq"/>
                         <outlet property="topTextField" destination="Qex-hf-2M4" id="XdM-ek-i5V"/>
-                        <segue destination="ARW-dl-qVX" kind="popoverPresentation" identifier="showEditOptions" popoverAnchorView="8bC-Xf-vdC" id="PiW-kF-D26">
-                            <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
-                        </segue>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -64,7 +61,7 @@
         <!--Edit Options View Controller-->
         <scene sceneID="vHu-G5-aVy">
             <objects>
-                <viewController id="ARW-dl-qVX" customClass="EditOptionsViewController" customModule="MemeMeV1" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="optionsViewController" id="ARW-dl-qVX" customClass="EditOptionsViewController" customModule="MemeMeV1" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="bfZ-ge-LWo"/>
                         <viewControllerLayoutGuide type="bottom" id="Dd6-hC-q16"/>
