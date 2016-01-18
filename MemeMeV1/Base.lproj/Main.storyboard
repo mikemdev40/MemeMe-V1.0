@@ -33,7 +33,7 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters" enablesReturnKeyAutomatically="YES"/>
                             </textField>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="ko6-aX-iHG" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="2qf-eu-RLe"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Qex-hf-2M4" secondAttribute="trailing" id="34a-z0-h8n"/>
