@@ -21,6 +21,7 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
     var cameraButton: UIBarButtonItem!
     var albumButton: UIBarButtonItem!
     var resizeButton: UIBarButtonItem!
+    var activeTextField: UITextField?
     let notificationCenter = NSNotificationCenter.defaultCenter()
     
     //MARK: CONSTANTS
@@ -84,12 +85,14 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
         topTextField.textAlignment = .Center
         topTextField.adjustsFontSizeToFitWidth = true
         topTextField.minimumFontSize = 20
+        topTextField.tag = 1
         
         bottomTextField.borderStyle = .None
         bottomTextField.defaultTextAttributes = memeTextAttributes
         bottomTextField.textAlignment = .Center
         bottomTextField.adjustsFontSizeToFitWidth = true
         bottomTextField.minimumFontSize = 20
+        bottomTextField.tag = 2
         
         if topTextField.text == "" {
             topTextField.text = placeholderText
@@ -100,11 +103,19 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
     }
     
     func keyboardWillShow(notification: NSNotification) {
-        view.frame.origin.y -= getKeyboardHeight(notification)
+        if let tag = activeTextField?.tag {
+            if tag == 2 {
+                view.frame.origin.y -= getKeyboardHeight(notification)
+            }
+        }
     }
     
     func keyboardWillHide(notification: NSNotification) {
-        view.frame.origin.y += getKeyboardHeight(notification)
+        if let tag = activeTextField?.tag {
+            if tag == 2 {
+                view.frame.origin.y += getKeyboardHeight(notification)
+            }
+        }
     }
     
     func getKeyboardHeight(notification: NSNotification) -> CGFloat {
@@ -139,6 +150,7 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
     }
     
     func textFieldDidBeginEditing(textField: UITextField) {
+        activeTextField = textField
         if textField.text == placeholderText {
             textField.text = ""
         }
