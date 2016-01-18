@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7A4773541C4C9CDA00BF80DA /* EditOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A4773531C4C9CDA00BF80DA /* EditOptionsViewController.swift */; };
 		7AAFBD921C4A89DC00AA906B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AAFBD911C4A89DC00AA906B /* AppDelegate.swift */; };
 		7AAFBD941C4A89DC00AA906B /* MemeEditorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AAFBD931C4A89DC00AA906B /* MemeEditorController.swift */; };
 		7AAFBD971C4A89DC00AA906B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7AAFBD951C4A89DC00AA906B /* Main.storyboard */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7A4773531C4C9CDA00BF80DA /* EditOptionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditOptionsViewController.swift; sourceTree = "<group>"; };
 		7AAFBD8E1C4A89DC00AA906B /* MemeMeV1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MemeMeV1.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7AAFBD911C4A89DC00AA906B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7AAFBD931C4A89DC00AA906B /* MemeEditorController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemeEditorController.swift; sourceTree = "<group>"; };
@@ -59,6 +61,7 @@
 				7AAFBD911C4A89DC00AA906B /* AppDelegate.swift */,
 				7AAFBD931C4A89DC00AA906B /* MemeEditorController.swift */,
 				7AAFBD951C4A89DC00AA906B /* Main.storyboard */,
+				7A4773531C4C9CDA00BF80DA /* EditOptionsViewController.swift */,
 				7AAFBDA31C4AFEF300AA906B /* MemeObject.swift */,
 				7AAFBD981C4A89DC00AA906B /* Assets.xcassets */,
 				7AAFBD9A1C4A89DC00AA906B /* LaunchScreen.storyboard */,
@@ -142,6 +145,7 @@
 				7AAFBDA41C4AFEF300AA906B /* MemeObject.swift in Sources */,
 				7AAFBD941C4A89DC00AA906B /* MemeEditorController.swift in Sources */,
 				7AAFBD921C4A89DC00AA906B /* AppDelegate.swift in Sources */,
+				7A4773541C4C9CDA00BF80DA /* EditOptionsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -291,6 +295,7 @@
 				7AAFBDA21C4A89DC00AA906B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

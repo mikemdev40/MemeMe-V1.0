@@ -52,11 +52,77 @@
                         <outlet property="bottomTextField" destination="DJf-sp-dKE" id="edC-OC-4QQ"/>
                         <outlet property="imageView" destination="ko6-aX-iHG" id="F2A-Vw-XNq"/>
                         <outlet property="topTextField" destination="Qex-hf-2M4" id="XdM-ek-i5V"/>
+                        <segue destination="ARW-dl-qVX" kind="popoverPresentation" identifier="showEditOptions" popoverAnchorView="8bC-Xf-vdC" id="PiW-kF-D26">
+                            <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                        </segue>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1359" y="412"/>
+        </scene>
+        <!--Edit Options View Controller-->
+        <scene sceneID="vHu-G5-aVy">
+            <objects>
+                <viewController id="ARW-dl-qVX" customClass="EditOptionsViewController" customModule="MemeMeV1" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="bfZ-ge-LWo"/>
+                        <viewControllerLayoutGuide type="bottom" id="Dd6-hC-q16"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="9BR-qc-csD">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="5Xx-rX-3GT">
+                                <rect key="frame" x="201" y="266" width="198" height="68"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="dIU-Aw-kaJ">
+                                        <rect key="frame" x="0.0" y="0.0" width="198" height="29"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Image Scale" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sVz-0e-Ucf">
+                                                <rect key="frame" x="0.0" y="0.0" width="94" height="29"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="ePn-ic-9cH">
+                                                <rect key="frame" x="104" y="0.0" width="94" height="29"/>
+                                            </stepper>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="HgP-M0-rGH">
+                                        <rect key="frame" x="0.0" y="39" width="198" height="29"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Font Style" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1aQ-77-8eg">
+                                                <rect key="frame" x="0.0" y="0.0" width="94" height="29"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="ggA-Dl-fe2">
+                                                <rect key="frame" x="104" y="0.0" width="94" height="29"/>
+                                            </stepper>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="5Xx-rX-3GT" firstAttribute="centerX" secondItem="9BR-qc-csD" secondAttribute="centerX" id="Auy-q7-fuH"/>
+                            <constraint firstItem="5Xx-rX-3GT" firstAttribute="centerY" secondItem="9BR-qc-csD" secondAttribute="centerY" id="qGH-La-4Mg"/>
+                            <constraint firstItem="5Xx-rX-3GT" firstAttribute="leading" secondItem="9BR-qc-csD" secondAttribute="leading" constant="201" id="z9F-kv-5pF"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="z9F-kv-5pF"/>
+                            </mask>
+                        </variation>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yXY-dk-JKk" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2059" y="407"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="1hn-vK-Je0">

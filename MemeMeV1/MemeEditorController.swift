@@ -9,7 +9,7 @@
 import UIKit
 import MobileCoreServices
 
-class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
+class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UIPopoverPresentationControllerDelegate {
 
     //MARK: OUTLETS
     @IBOutlet weak var topTextField: UITextField!
@@ -69,6 +69,10 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
         default:
             break
         }
+    }
+    
+    func edit() {
+        performSegueWithIdentifier("showEditOptions", sender: resizeButton)
     }
     
     func cancel() {
@@ -169,9 +173,24 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
         return true
     }
     
+    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
+        return UIModalPresentationStyle.None
+    }
+    
     //MARK: VIEW CONTROLLER METHODS
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         view.endEditing(true)
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "showEditOptions" {
+            if let eovc = segue.destinationViewController as? EditOptionsViewController {
+                if let popover = eovc.popoverPresentationController {
+                    popover.delegate = self
+                    popover.barButtonItem = sender as? UIBarButtonItem
+                }
+            }
+        }
     }
     
     //MARK: VIEW CONTROLLER LIFECYCLE
@@ -185,7 +204,8 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
         barSpace = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
         cameraButton = UIBarButtonItem(barButtonSystemItem: .Camera, target: self, action: "takeImageWithCamera")
         albumButton = UIBarButtonItem(title: "Album", style: .Plain, target: self, action: "pickImageFromAlbum")
-        resizeButton = UIBarButtonItem(title: "Resize", style: .Plain, target: self, action: "resizeImage")
+   //     resizeButton = UIBarButtonItem(title: "Resize", style: .Plain, target: self, action: "resizeImage")
+        resizeButton = UIBarButtonItem(title: "EDIT", style: .Plain, target: self, action: "edit")
 
         toolbarItems = [barSpace, albumButton, barSpace, cameraButton, barSpace, resizeButton, barSpace]
         navigationController?.toolbarHidden = false
