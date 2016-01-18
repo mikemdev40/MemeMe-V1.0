@@ -20,7 +20,7 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
     var barSpace: UIBarButtonItem!
     var cameraButton: UIBarButtonItem!
     var albumButton: UIBarButtonItem!
-    var resizeButton: UIBarButtonItem!
+    var editButton: UIBarButtonItem!
     var activeTextField: UITextField?
     let notificationCenter = NSNotificationCenter.defaultCenter()
     
@@ -56,31 +56,15 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
    
     }
     
-    func resizeImage() {
-        switch imageView.contentMode {
-        case .ScaleAspectFill:
-            imageView.contentMode = .ScaleAspectFit
-        case .ScaleAspectFit:
-            imageView.contentMode = .Center
-        case .Center:
-            imageView.contentMode = .ScaleToFill
-        case .ScaleToFill:
-            imageView.contentMode = .ScaleAspectFill
-        default:
-            break
-        }
-    }
-    
     func edit() {
-        performSegueWithIdentifier("showEditOptions", sender: resizeButton)
+        performSegueWithIdentifier("showEditOptions", sender: editButton)
     }
     
     func cancel() {
-        //TODO: cancel method
         imageView.image = nil
         topTextField.text = placeholderText
         bottomTextField.text = placeholderText
-        resizeButton.enabled = false
+        editButton.enabled = false
     }
     
     func setText() {
@@ -207,10 +191,9 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
         barSpace = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
         cameraButton = UIBarButtonItem(barButtonSystemItem: .Camera, target: self, action: "takeImageWithCamera")
         albumButton = UIBarButtonItem(title: "Album", style: .Plain, target: self, action: "pickImageFromAlbum")
-   //     resizeButton = UIBarButtonItem(title: "Resize", style: .Plain, target: self, action: "resizeImage")
-        resizeButton = UIBarButtonItem(title: "EDIT", style: .Plain, target: self, action: "edit")
+        editButton = UIBarButtonItem(title: "EDIT", style: .Plain, target: self, action: "edit")
 
-        toolbarItems = [barSpace, albumButton, barSpace, cameraButton, barSpace, resizeButton, barSpace]
+        toolbarItems = [barSpace, albumButton, barSpace, cameraButton, barSpace, editButton, barSpace]
         navigationController?.toolbarHidden = false
         
         cameraButton.enabled = UIImagePickerController.isSourceTypeAvailable(.Camera)
@@ -226,9 +209,9 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
         super.viewWillAppear(animated)
         
         if imageView.image == nil {
-            resizeButton.enabled = false
+            editButton.enabled = false
         } else {
-            resizeButton.enabled = true
+            editButton.enabled = true
         }
         
         subscribeToKeyboardNotifications()

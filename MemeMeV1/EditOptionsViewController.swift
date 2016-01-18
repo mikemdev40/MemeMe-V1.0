@@ -23,14 +23,14 @@ class EditOptionsViewController: UIViewController {
         case 1:
             if let imageView = imageView {
                 switch imageView.contentMode {
-                case .ScaleAspectFill:
+                case .ScaleAspectFit:
                     imageView.contentMode = .ScaleToFill
                 case .ScaleToFill:
+                    imageView.contentMode = .ScaleAspectFill
+                case .ScaleAspectFill:
                     imageView.contentMode = .Center
                 case .Center:
                     imageView.contentMode = .ScaleAspectFit
-                case .ScaleAspectFit:
-                    imageView.contentMode = .ScaleAspectFill
                 default:
                     break
                 }
@@ -38,14 +38,14 @@ class EditOptionsViewController: UIViewController {
         case 2:
             if let imageView = imageView {
                 switch imageView.contentMode {
-                case .ScaleAspectFill:
-                    imageView.contentMode = .ScaleAspectFit
                 case .ScaleAspectFit:
                     imageView.contentMode = .Center
                 case .Center:
+                    imageView.contentMode = .ScaleAspectFill
+                case .ScaleAspectFill:
                     imageView.contentMode = .ScaleToFill
                 case .ScaleToFill:
-                    imageView.contentMode = .ScaleAspectFill
+                    imageView.contentMode = .ScaleAspectFit
                 default:
                     break
                 }
