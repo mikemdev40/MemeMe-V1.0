@@ -223,6 +223,8 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
+        
+        
         subscribeToKeyboardNotifications()
     }
     

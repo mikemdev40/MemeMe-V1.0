@@ -4,6 +4,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
         <!--Meme Editor Controller-->
@@ -23,29 +24,80 @@
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             </imageView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" adjustsFontSizeToFit="NO" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Qex-hf-2M4">
-                                <rect key="frame" x="20" y="122" width="560" height="30"/>
+                                <rect key="frame" x="20" y="149.5" width="560" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters" enablesReturnKeyAutomatically="YES"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" adjustsFontSizeToFit="NO" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="DJf-sp-dKE">
-                                <rect key="frame" x="20" y="503" width="560" height="30"/>
+                                <rect key="frame" x="20" y="472.5" width="560" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters" enablesReturnKeyAutomatically="YES"/>
                             </textField>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WKv-yH-hcA">
+                                <rect key="frame" x="180" y="187.5" width="240" height="277"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="335" id="RMV-cQ-m2G"/>
+                                    <constraint firstAttribute="width" constant="240" id="voF-uO-aTa"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="RMV-cQ-m2G"/>
+                                    </mask>
+                                </variation>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C78-6V-2BK">
+                                <rect key="frame" x="180" y="510.5" width="240" height="69.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="240" id="PjC-ku-w64"/>
+                                    <constraint firstAttribute="height" constant="39" id="UEX-2j-3jP"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="UEX-2j-3jP"/>
+                                    </mask>
+                                </variation>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Maz-Xl-QD1">
+                                <rect key="frame" x="180" y="72" width="240" height="69.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="240" id="bdZ-Kw-3nJ"/>
+                                    <constraint firstAttribute="height" constant="42" id="upi-zi-0Z5"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="upi-zi-0Z5"/>
+                                    </mask>
+                                </variation>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="ko6-aX-iHG" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="2qf-eu-RLe"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Qex-hf-2M4" secondAttribute="trailing" id="34a-z0-h8n"/>
+                            <constraint firstItem="Maz-Xl-QD1" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="5H1-ub-KEi"/>
                             <constraint firstItem="ko6-aX-iHG" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="9RF-1u-GAa"/>
                             <constraint firstAttribute="trailing" secondItem="ko6-aX-iHG" secondAttribute="trailing" id="Efa-dj-N1c"/>
                             <constraint firstAttribute="leadingMargin" secondItem="DJf-sp-dKE" secondAttribute="leading" id="HZc-FU-j4D"/>
                             <constraint firstItem="Qex-hf-2M4" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="J4V-Bb-JZr"/>
-                            <constraint firstItem="Qex-hf-2M4" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="58" id="JP8-cc-7Cx"/>
+                            <constraint firstItem="C78-6V-2BK" firstAttribute="top" secondItem="DJf-sp-dKE" secondAttribute="bottom" constant="8" id="Mjn-1o-u4E"/>
+                            <constraint firstItem="WKv-yH-hcA" firstAttribute="top" secondItem="Qex-hf-2M4" secondAttribute="bottom" constant="8" id="OIV-TT-nY9"/>
                             <constraint firstItem="ko6-aX-iHG" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="SgS-b3-cN8"/>
+                            <constraint firstItem="C78-6V-2BK" firstAttribute="height" secondItem="Maz-Xl-QD1" secondAttribute="height" id="T8a-h0-ECw"/>
+                            <constraint firstItem="DJf-sp-dKE" firstAttribute="top" secondItem="WKv-yH-hcA" secondAttribute="bottom" constant="8" id="UEc-Ir-UQu"/>
+                            <constraint firstItem="Maz-Xl-QD1" firstAttribute="height" secondItem="WKv-yH-hcA" secondAttribute="height" multiplier="0.25" id="Xgs-YP-tyQ"/>
+                            <constraint firstItem="C78-6V-2BK" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Ykm-hP-mkq"/>
+                            <constraint firstItem="C78-6V-2BK" firstAttribute="centerX" secondItem="DJf-sp-dKE" secondAttribute="centerX" id="anx-Xc-gLL"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="C78-6V-2BK" secondAttribute="bottom" constant="20" id="fjS-Ks-eiM"/>
                             <constraint firstAttribute="trailingMargin" secondItem="DJf-sp-dKE" secondAttribute="trailing" id="h0w-0R-xUl"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="DJf-sp-dKE" secondAttribute="bottom" constant="67" id="oBb-pc-OD6"/>
+                            <constraint firstItem="Maz-Xl-QD1" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" id="iGy-03-NMn"/>
+                            <constraint firstItem="WKv-yH-hcA" firstAttribute="centerX" secondItem="Qex-hf-2M4" secondAttribute="centerX" id="mEh-Id-jQh"/>
+                            <constraint firstItem="Qex-hf-2M4" firstAttribute="top" secondItem="Maz-Xl-QD1" secondAttribute="bottom" constant="8" id="u8C-tB-A52"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="Ykm-hP-mkq"/>
+                            </mask>
+                        </variation>
                     </view>
                     <navigationItem key="navigationItem" id="LyO-dQ-buV"/>
                     <connections>
