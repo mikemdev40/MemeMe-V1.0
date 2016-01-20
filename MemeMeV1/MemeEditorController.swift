@@ -9,6 +9,8 @@
 import UIKit
 import MobileCoreServices
 
+//note the adoption of the UpdateFontDelegate protocol below, which is defined in the EditOptionsViewController class and adopted by this MemeEditorController class; delegation is used in this application for the purpose of enabling the user to change the font of the meme from a popover view controller, and have the font change immediately reflected on the main view controller screen
+
 class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UIPopoverPresentationControllerDelegate, UpdateFontDelegate {
     
     //MARK: OUTLETS
@@ -21,7 +23,6 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
         static let placeholderText = "TAP TO EDIT"
         static let defaultFont = UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!
         static let defaultScale = UIViewContentMode.ScaleAspectFit
-        static let missingTextError = "Missing text!"
     }
     
     //MARK: PROPERTIES
@@ -36,12 +37,12 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
     var memeFont = Constants.defaultFont {
         didSet { setText() }
     }
-
+    //property that is required by the UpdateFontDelegate protocol
     var newFontStyle = Constants.defaultFont {
         didSet { memeFont = newFontStyle }
     }
     
-    //MARK: COMPUTED PROPERTITES
+    //MARK: COMPUTED PROPERTIES
     var memeTextAttributes: [String: AnyObject] {
         return [NSStrokeColorAttributeName: UIColor.blackColor(),
             NSStrokeWidthAttributeName: -2,
@@ -67,6 +68,7 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
         presentViewController(picker, animated: true, completion: nil)
     }
     
+    //method that creates a meme image
     func createMeme() -> UIImage {
         UIGraphicsBeginImageContext(view.frame.size)
         view.drawViewHierarchyInRect(view.frame, afterScreenUpdates: true)
@@ -76,6 +78,7 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
         return memedImage
     }
     
+    //method that shares the meme using a UIActivityViewContoller, then saves the image to an instance of the MemeObject struct using the completion handler for the activity controller; the save occurs after any activity is selected, however, a save does NOT occur if the user clicks "cancel" (i.e. activity == nil) or there is an error
     func shareAndSaveMeme() {
         guard let topText = topTextField.text, let bottomText = bottomTextField.text else {
             callAlert("Missing Text", message: "Make sure you have text typed!")
@@ -101,6 +104,7 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
         }
     }
     
+    //method that presents the options view controller (as a popoever, even on iPhone) for controlling image scale and font selection; delegation is used for the purpose of enabling the user to update the font from the popover and have the font update in real time (without needing to dismiss the popover); an "UpdateFontDelegate" protocol is defined in the editoptionsviewcontroller class, and this class adopts the protocol by declaring a newFontStyle variable (which, when set in the popover by choosing a new font, updates the value of memeFont which then calls the setText() method to update the screen).
     func showOptions() {
         if let eovc = storyboard?.instantiateViewControllerWithIdentifier("optionsViewController") as? EditOptionsViewController {
             eovc.modalPresentationStyle = .Popover
@@ -112,6 +116,7 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
                 eovc.imageView = imageView
                 eovc.delegate = self
                 
+                //creating and presenting the popover in code rather than using segues on the storyboard was used because the "presentViewController" function comes with a completion callback which was needed in order to set the passthroughViews property to nil, thus preventing the user form interacting with the "Albums" button on the toolbar while the popover was up (note that setting this property before presenting the popover did NOT disable the toolbar interactivity, and thus access to this closure was necessary); performing a segue did not provide a callback option
                 presentViewController(eovc, animated: true, completion: { [unowned popover] () -> Void in
                     popover.passthroughViews = nil
                 })
@@ -119,6 +124,7 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
         }
     }
     
+    //method that "resets" the image and the text when the cancel button is tapped in the top right corner
     func cancel() {
         imageView.image = nil
         topTextField.text = Constants.placeholderText
@@ -127,6 +133,7 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
         imageView.contentMode = Constants.defaultScale
     }
     
+    //method that sets up the top and bottom meme text fields (note that the memeTextAttributes is a computed property which uses the value of "memeFont" as the font, which can be set using the options button)
     func setText() {
         topTextField.borderStyle = .None
         topTextField.defaultTextAttributes = memeTextAttributes
@@ -147,21 +154,24 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
             bottomTextField.text = Constants.placeholderText
         }
     }
-    //method for calling errors that could be produced while audio recording
+    
+    //method for creating an alert with a specific title and message
     func callAlert(title: String, message: String) {
         let ac = UIAlertController(title: title, message: message, preferredStyle: .Alert)
         ac.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
         presentViewController(ac, animated: true, completion: nil)
     }
     
+    //the two methods below are called when a keyboardWillShow or keyboardWillHide notification is received; the shiftView method is passed a closure as an argument which defines the operation (either addition or subtraction) that should occur to the view's frame based on if the keyboard is showing or hiding; shorthand closure notation is used for convenience.
     func keyboardWillShow(notification: NSNotification) {
         shiftView(notification) { return $0 - $1 }
     }
-    
+
     func keyboardWillHide(notification: NSNotification) {
         shiftView(notification) { return $0 + $1 }
     }
     
+    //method for shifting the view in response to the keyboard showing or hiding; the method has a closure parameter which takes two CGFloats and either adds or subtracts them; the shift up/down only occurs if the bottom textfield is active (the bottom textfield has a tag set to 2); the two CGFloats being operated on are the y coordinate of the view's frame and an "offset" involving the height of the keyboard and the height of the toolbar (note that the "activefield" property is set to whichever textfield is clicked on, set in the textFieldDidBeginEditing delegate method below)
     func shiftView(notification: NSNotification, operation: (CGFloat, CGFloat) -> CGFloat) {
         if let tag = activeTextField?.tag {
             if tag == 2 {
@@ -172,17 +182,20 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
         }
     }
     
+    //method that extracts the height of the keyboard from the userinfo property of the notification
     func getKeyboardHeight(notification: NSNotification) -> CGFloat {
         let userInfo = notification.userInfo
         let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
         return keyboardSize.CGRectValue().height
     }
     
+    //method that subscribes the viewcontroller to receive keyboard notifications
     func subscribeToKeyboardNotifications() {
         notificationCenter.addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
         notificationCenter.addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
     }
-    
+
+    //method that unsubscribes the viewcontroller from keyboard notifications
     func unsubscribeFromKeyboardNotifications() {
         notificationCenter.removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
         notificationCenter.removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
@@ -203,6 +216,7 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
         dismissViewControllerAnimated(true, completion: nil)
     }
     
+    //delegate method that is called when a textfield is clicked on; the activefield property is set here, for use when determining if the keyboard should cause the view to shift up or not
     func textFieldDidBeginEditing(textField: UITextField) {
         activeTextField = textField
         if textField.text == Constants.placeholderText {
@@ -221,6 +235,7 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
         return true
     }
     
+    //delegte method used to override the iphone's automatic adapting of a popover into a modal view controller (this was needed in order to maintain the popover bubble on an iphone)
     func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
         return UIModalPresentationStyle.None
     }
@@ -259,8 +274,6 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
-        
         
         subscribeToKeyboardNotifications()
     }
