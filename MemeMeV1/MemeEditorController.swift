@@ -22,7 +22,6 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
         static let defaultFont = UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!
         static let defaultScale = UIViewContentMode.ScaleAspectFit
         static let missingTextError = "Missing text!"
-        static let missingImageError = "Must have an image selected in order to create and share a meme!"
     }
     
     //MARK: PROPERTIES
@@ -68,29 +67,38 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
         presentViewController(picker, animated: true, completion: nil)
     }
     
-    func saveMeme() {
+    func createMeme() -> UIImage {
+        UIGraphicsBeginImageContext(view.frame.size)
+        view.drawViewHierarchyInRect(view.frame, afterScreenUpdates: true)
+        let memedImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return memedImage
+    }
+    
+    func shareAndSaveMeme() {
         guard let topText = topTextField.text, let bottomText = bottomTextField.text else {
-            callError(Constants.missingTextError)
+            callAlert("Missing Text", message: "Make sure you have text typed!")
             return
         }
         
         if let imageToMeme = imageView.image {
-            UIGraphicsBeginImageContext(view.frame.size)
-            view.drawViewHierarchyInRect(view.frame, afterScreenUpdates: true)
-            let memedImage = UIGraphicsGetImageFromCurrentImageContext()
-            UIGraphicsEndImageContext()
-            meme = MemeObject(topText: topText, bottomText: bottomText, originalImage: imageToMeme, memedImage: memedImage)
-            
-            shareMeme(meme.memedImage)
-            
+            let memedImage = createMeme()
+            let shareVC = UIActivityViewController(activityItems: [memedImage], applicationActivities: [])
+            shareVC.completionWithItemsHandler = {[unowned self] (activity, choseAnAction, returnedItems, error) -> Void in
+                if error != nil {
+                    self.callAlert("Error", message: error!.localizedDescription)
+                } else if activity != nil {
+                    self.meme = MemeObject(topText: topText, bottomText: bottomText, originalImage: imageToMeme, memedImage: memedImage)
+                    self.callAlert("SAVED", message: "Meme was saved!")
+                } else {
+                    self.callAlert("Not Saved", message: "Meme was not saved because you cancelled.")
+                }
+            }
+            presentViewController(shareVC, animated: true, completion: nil)
         } else {
-            callError(Constants.missingImageError)
+            callAlert("No Image", message: "Must have an image selected in order to create and share a meme!")
         }
-    }
-    
-    func shareMeme(imageToShare: UIImage) {
-        let shareVC = UIActivityViewController(activityItems: [imageToShare], applicationActivities: [])
-        presentViewController(shareVC, animated: true, completion: nil)
     }
     
     func showOptions() {
@@ -140,8 +148,8 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
         }
     }
     //method for calling errors that could be produced while audio recording
-    func callError(error: String) {
-        let ac = UIAlertController(title: "Error", message: error, preferredStyle: .Alert)
+    func callAlert(title: String, message: String) {
+        let ac = UIAlertController(title: title, message: message, preferredStyle: .Alert)
         ac.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
         presentViewController(ac, animated: true, completion: nil)
     }
@@ -228,7 +236,7 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
         
         title = "Meme Editor"
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: "cancel")
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Action, target: self, action: "saveMeme")
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Action, target: self, action: "shareAndSaveMeme")
     
         barSpace = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
         cameraButton = UIBarButtonItem(barButtonSystemItem: .Camera, target: self, action: "takeImageWithCamera")

@@ -74,8 +74,6 @@ class EditOptionsViewController: UIViewController {
                 case "Copperplate-Bold":
                     delegate?.newFontStyle = UIFont(name: "Courier-Bold", size: 40)!
                 case "Courier-Bold":
-                    delegate?.newFontStyle = UIFont(name: "Futura-CondensedExtraBold", size: 40)!
-                case "Futura-CondensedExtraBold":
                     delegate?.newFontStyle = UIFont(name: "Verdana-Bold", size: 40)!
                 case "Verdana-Bold":
                     delegate?.newFontStyle = UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!
@@ -89,8 +87,6 @@ class EditOptionsViewController: UIViewController {
                 case "HelveticaNeue-CondensedBlack":
                     delegate?.newFontStyle = UIFont(name: "Verdana-Bold", size: 40)!
                 case "Verdana-Bold":
-                    delegate?.newFontStyle = UIFont(name: "Futura-CondensedExtraBold", size: 40)!
-                case "Futura-CondensedExtraBold":
                     delegate?.newFontStyle = UIFont(name: "Courier-Bold", size: 40)!
                 case "Courier-Bold":
                     delegate?.newFontStyle = UIFont(name: "Copperplate-Bold", size: 40)!
