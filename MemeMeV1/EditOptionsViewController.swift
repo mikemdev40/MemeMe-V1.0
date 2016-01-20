@@ -8,6 +8,7 @@
 
 import UIKit
 
+//delegate protocol defined, which the MemeEditorController adopts; this delegatation is used to make the MemeEditorController aware of changes to the font on the popover and make changes to the main screen in real time (while the popover is still active); when the newFontStyle is set on the delegate, the main screen font selection is set to the new font selection (through a didset property observer), which promptys an update to the text field attributes
 protocol UpdateFontDelegate {
     var newFontStyle: UIFont { get set}
 }
@@ -25,6 +26,7 @@ class EditOptionsViewController: UIViewController {
     var delegate: UpdateFontDelegate?
     
     //MARK: METHODS
+    //method that is connected to the two image scale selector buttons; one button cycles forward through five different image scale options, and the other button cycles backwards; the tags (1 and 2) for the two buttons are set in viewDidLoad
     @IBAction func changeImageScale(sender: UIButton) {
         switch sender.tag {
         case 1:
@@ -62,6 +64,7 @@ class EditOptionsViewController: UIViewController {
         }
     }
     
+    //method that is connected to the two font selector buttons; one button cycles forward through five different font options, and the other button cycles backwards; the tags (1 and 2) for the two buttons are set in viewDidLoad; the new font is set to the delegate's (MemeEditorViewController's) newFontStyle property
     @IBAction func changeFontStyle(sender: UIButton) {
         switch sender.tag {
         case 1:
@@ -113,6 +116,7 @@ class EditOptionsViewController: UIViewController {
         fontStyleForward.tag = 2
     }
 
+    //when the popover is about to appear, the image scale selector buttons are disabled if there is no image that has been selected (the font selector buttons are always enabled)
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         

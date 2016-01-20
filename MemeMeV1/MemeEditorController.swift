@@ -34,10 +34,11 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
     var meme: MemeObject!
     let notificationCenter = NSNotificationCenter.defaultCenter()
 
+    //variable for the font of the textfields, which, when set to a different values, causes the textfields to update through the didset property observer's call of setText (which set the text field attributes)
     var memeFont = Constants.defaultFont {
         didSet { setText() }
     }
-    //property that is required by the UpdateFontDelegate protocol
+    //property that is required by the UpdateFontDelegate protocol; when newFontStyle is set in the popover options screen, the property observer on this variable sets memeFont to the new font
     var newFontStyle = Constants.defaultFont {
         didSet { memeFont = newFontStyle }
     }
@@ -78,7 +79,7 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
         return memedImage
     }
     
-    //method that shares the meme using a UIActivityViewContoller, then saves the image to an instance of the MemeObject struct using the completion handler for the activity controller; the save occurs after any activity is selected, however, a save does NOT occur if the user clicks "cancel" (i.e. activity == nil) or there is an error
+    //method that shares the meme using a UIActivityViewContoller, then saves the image to an instance of the MemeObject struct using the completion handler for the activity controller; the save occurs after any activity is selected, however, a save does NOT occur if the user clicks "cancel" (i.e. activity == nil) or there is an error; an appropriate alert is shown to the user after the save occurs (or doesn't)
     func shareAndSaveMeme() {
         guard let topText = topTextField.text, let bottomText = bottomTextField.text else {
             callAlert("Missing Text", message: "Make sure you have text typed!")
@@ -93,7 +94,7 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
                     self.callAlert("Error", message: error!.localizedDescription)
                 } else if activity != nil {
                     self.meme = MemeObject(topText: topText, bottomText: bottomText, originalImage: imageToMeme, memedImage: memedImage)
-                    self.callAlert("SAVED", message: "Meme was saved!")
+                    self.callAlert("SAVED", message: "Meme was saved.")
                 } else {
                     self.callAlert("Not Saved", message: "Meme was not saved because you cancelled.")
                 }
