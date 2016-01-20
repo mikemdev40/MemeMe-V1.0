@@ -21,6 +21,8 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
         static let placeholderText = "TAP TO EDIT"
         static let defaultFont = UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!
         static let defaultScale = UIViewContentMode.ScaleAspectFit
+        static let missingTextError = "Missing text!"
+        static let missingImageError = "Must have an image selected in order to create and share a meme!"
     }
     
     //MARK: PROPERTIES
@@ -29,6 +31,7 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
     var albumButton: UIBarButtonItem!
     var optionsButton: UIBarButtonItem!
     var activeTextField: UITextField?
+    var meme: MemeObject!
     let notificationCenter = NSNotificationCenter.defaultCenter()
 
     var memeFont = Constants.defaultFont {
@@ -65,13 +68,32 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
         presentViewController(picker, animated: true, completion: nil)
     }
     
-    func shareMeme() {
-      //  let share = UIActivityViewController(activityItems: [nil], applicationActivities: nil)
-      //  presentViewController(share, animated: true, completion: nil)
-   
+    func saveMeme() {
+        guard let topText = topTextField.text, let bottomText = bottomTextField.text else {
+            callError(Constants.missingTextError)
+            return
+        }
+        
+        if let imageToMeme = imageView.image {
+            UIGraphicsBeginImageContext(view.frame.size)
+            view.drawViewHierarchyInRect(view.frame, afterScreenUpdates: true)
+            let memedImage = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            meme = MemeObject(topText: topText, bottomText: bottomText, originalImage: imageToMeme, memedImage: memedImage)
+            
+            shareMeme(meme.memedImage)
+            
+        } else {
+            callError(Constants.missingImageError)
+        }
     }
     
-    func edit() {
+    func shareMeme(imageToShare: UIImage) {
+        let shareVC = UIActivityViewController(activityItems: [imageToShare], applicationActivities: [])
+        presentViewController(shareVC, animated: true, completion: nil)
+    }
+    
+    func showOptions() {
         if let eovc = storyboard?.instantiateViewControllerWithIdentifier("optionsViewController") as? EditOptionsViewController {
             eovc.modalPresentationStyle = .Popover
             if let popover = eovc.popoverPresentationController {
@@ -116,6 +138,12 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
         if bottomTextField.text == "" {
             bottomTextField.text = Constants.placeholderText
         }
+    }
+    //method for calling errors that could be produced while audio recording
+    func callError(error: String) {
+        let ac = UIAlertController(title: "Error", message: error, preferredStyle: .Alert)
+        ac.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+        presentViewController(ac, animated: true, completion: nil)
     }
     
     func keyboardWillShow(notification: NSNotification) {
@@ -200,12 +228,12 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
         
         title = "Meme Editor"
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: "cancel")
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Action, target: self, action: "shareMeme")
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Action, target: self, action: "saveMeme")
     
         barSpace = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
         cameraButton = UIBarButtonItem(barButtonSystemItem: .Camera, target: self, action: "takeImageWithCamera")
         albumButton = UIBarButtonItem(title: "Album", style: .Plain, target: self, action: "pickImageFromAlbum")
-        optionsButton = UIBarButtonItem(title: "Options", style: .Plain, target: self, action: "edit")
+        optionsButton = UIBarButtonItem(title: "Options", style: .Plain, target: self, action: "showOptions")
 
         toolbarItems = [barSpace, albumButton, barSpace, cameraButton, barSpace, optionsButton, barSpace]
         navigationController?.toolbarHidden = false
