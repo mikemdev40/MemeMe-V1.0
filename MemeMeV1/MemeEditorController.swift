@@ -17,6 +17,8 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
     @IBOutlet weak var topTextField: UITextField!
     @IBOutlet weak var bottomTextField: UITextField!
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var blackBackground: UIView!
+    @IBOutlet weak var messageLabel: UILabel!
     
     //MARK: CONSTANTS
     struct Constants {
@@ -132,6 +134,7 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
         bottomTextField.text = Constants.placeholderText
         memeFont = Constants.defaultFont
         imageView.contentMode = Constants.defaultScale
+        blackBackground.backgroundColor = UIColor.clearColor()
     }
     
     //method that sets up the top and bottom meme text fields (note that the memeTextAttributes is a computed property which uses the value of "memeFont" as the font, which can be set using the options button)
@@ -209,6 +212,7 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
            image = info[UIImagePickerControllerOriginalImage] as? UIImage
         }
         imageView.image = image
+        blackBackground.backgroundColor = UIColor.blackColor()
         
         dismissViewControllerAnimated(true, completion: nil)
     }
@@ -264,6 +268,12 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
         
         cameraButton.enabled = UIImagePickerController.isSourceTypeAvailable(.Camera)
         albumButton.enabled = UIImagePickerController.isSourceTypeAvailable(.PhotoLibrary)
+        
+        if UIImagePickerController.isSourceTypeAvailable(.Camera) {
+            messageLabel.text = "Choose an image from your album or take a photo to begin!"
+        } else {
+            messageLabel.text = "Choose an image from your album to begin!"
+        }
         
         topTextField.delegate = self
         bottomTextField.delegate = self
