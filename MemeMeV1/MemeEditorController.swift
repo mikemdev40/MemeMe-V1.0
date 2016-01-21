@@ -25,6 +25,7 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
         static let placeholderText = "TAP HERE TO EDIT"
         static let defaultFont = UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!
         static let defaultScale = UIViewContentMode.ScaleAspectFit
+        static let optionsPopoverSize = CGSize(width: 215, height: 125)
     }
     
     //MARK: PROPERTIES
@@ -115,8 +116,9 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
                 popover.delegate = self
                 popover.barButtonItem = optionsButton
                 popover.backgroundColor = UIColor.whiteColor()
-                eovc.preferredContentSize = CGSize(width: 210, height: 90)
+                eovc.preferredContentSize = Constants.optionsPopoverSize
                 eovc.imageView = imageView
+                eovc.currentFont = memeFont
                 eovc.delegate = self
                 
                 //creating and presenting the popover in code rather than using segues on the storyboard was used because the "presentViewController" function comes with a completion callback which was needed in order to set the passthroughViews property to nil, thus preventing the user form interacting with the "Albums" button on the toolbar while the popover was up (note that setting this property before presenting the popover did NOT disable the toolbar interactivity, and thus access to this closure was necessary); performing a segue did not provide a callback option
@@ -142,13 +144,13 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
         topTextField.borderStyle = .None
         topTextField.defaultTextAttributes = memeTextAttributes
         topTextField.textAlignment = .Center
-        topTextField.adjustsFontSizeToFitWidth = true
+        topTextField.adjustsFontSizeToFitWidth = false
         topTextField.minimumFontSize = 20
         
         bottomTextField.borderStyle = .None
         bottomTextField.defaultTextAttributes = memeTextAttributes
         bottomTextField.textAlignment = .Center
-        bottomTextField.adjustsFontSizeToFitWidth = true
+        bottomTextField.adjustsFontSizeToFitWidth = false
         bottomTextField.minimumFontSize = 20
         
         if topTextField.text == "" {
