@@ -22,7 +22,7 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
     
     //MARK: CONSTANTS
     struct Constants {
-        static let placeholderText = "TAP HERE TO EDIT"
+        static let placeholderText = "TAP TO EDIT"
         static let defaultFont = UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!
         static let defaultScale = UIViewContentMode.ScaleAspectFit
         static let optionsPopoverSize = CGSize(width: 215, height: 125)
