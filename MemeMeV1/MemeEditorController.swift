@@ -22,7 +22,7 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
     
     //MARK: CONSTANTS
     struct Constants {
-        static let placeholderText = "TAP TO EDIT"
+        static let placeholderText = "TAP HERE TO EDIT"
         static let defaultFont = UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!
         static let defaultScale = UIViewContentMode.ScaleAspectFit
     }
@@ -96,14 +96,14 @@ class MemeEditorController: UIViewController, UIImagePickerControllerDelegate, U
                     self.callAlert("Error", message: error!.localizedDescription)
                 } else if activity != nil {
                     self.meme = MemeObject(topText: topText, bottomText: bottomText, originalImage: imageToMeme, memedImage: memedImage)
-                    self.callAlert("SAVED", message: "Meme was saved.")
+                    self.callAlert("SAVED", message: "Memed image was saved.")
                 } else {
-                    self.callAlert("Not Saved", message: "Meme was not saved because you cancelled.")
+                    self.callAlert("Not Saved", message: "Memed image did not save because you cancelled.")
                 }
             }
             presentViewController(shareVC, animated: true, completion: nil)
         } else {
-            callAlert("No Image", message: "Must have an image selected in order to create and share a meme!")
+            callAlert("No Image", message: "You must have an image selected in order to share!")
         }
     }
     
